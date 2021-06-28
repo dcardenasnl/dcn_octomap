@@ -24,7 +24,30 @@ include_directories(
 
 catkin_package(
   INCLUDE_DIRS include
-#  LIBRARIES navigation_msgs
+  LIBRARIES ${PROJECT_NAME}
   CATKIN_DEPENDS ${PACKAGE_DEPENDENCIES}
 #  DEPENDS OCTOMAP
+)
+
+########
+# LIBS #
+########
+
+add_library(${PROJECT_NAME}
+  src/octomap_interface.cpp
+)
+target_link_libraries(${PROJECT_NAME}
+  ${catkin_LIBRARIES}
+  ${OCTOMAP_LIBRARIES}
+)
+
+#########
+# NODES #
+#########
+
+add_executable(octomap_node src/octomap_node.cpp)
+target_link_libraries(octomap_node
+  ${PROJECT_NAME}
+  ${catkin_LIBRARIES}
+  ${OCTOMAP_LIBRARIES}
 )
